@@ -1,9 +1,11 @@
-package com.lima.souza.caio.streams;
+package com.lima.souza.caio.streams.map;
 
 import java.util.Arrays;
 import java.util.List;
 import java.util.function.Consumer;
 import java.util.function.UnaryOperator;
+
+import com.lima.souza.caio.streams.Utils;
 
 public class Map {
 	public static void main(String[] args) {

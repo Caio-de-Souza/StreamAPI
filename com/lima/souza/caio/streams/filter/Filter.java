@@ -1,8 +1,10 @@
-package com.lima.souza.caio.streams;
+package com.lima.souza.caio.streams.filter;
 
 import java.util.Arrays;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
+import java.util.function.BiFunction;
+import java.util.function.BinaryOperator;
 import java.util.function.Function;
 import java.util.function.Predicate;
 
@@ -41,5 +43,18 @@ public class Filter {
 		fim = System.currentTimeMillis();
 		tempo = fim - ini;
 		System.out.println(TimeUnit.MILLISECONDS.toMillis(tempo) + " milisegundos.");
+		
+		//Exercicio com Reduce
+		BiFunction<Media, Double, Media> calcularMedia = (media, nota) -> media.adicionar(nota);
+		BinaryOperator<Media> combinarMedias = (m1, m2) -> Media.combinar(m1, m2);
+		Function<Aluno, Double> apenasNota = a -> a.nota;
+		
+		Media media = alunos.parallelStream()
+				.filter(isAprovado)
+				.map(apenasNota)
+				.reduce(new Media(), calcularMedia, combinarMedias);
+		
+		System.out.println("A média da turma é " + media.getValor());
 	}
+	
 }
